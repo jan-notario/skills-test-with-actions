@@ -1,25 +1,45 @@
-# System Modules
-import sys
-import os
-
-# Installed Modules
 import pytest
-
-# Project Modules
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-from calculations import area_of_circle, get_nth_fibonacci   # noqa: E402
+from src.calculations import area_of_circle, get_nth_fibonacci, add_numbers, multiply_numbers
 
 
-def test_area_of_circle_positive_radius():
-    """Test with a positive radius."""
+def test_add_numbers():
+    """Test adding two numbers."""
+    assert add_numbers(2, 3) == 5
+    assert add_numbers(-1, 1) == 0
+
+
+def test_multiply_numbers():
+    """Test multiplying two numbers."""
+    assert multiply_numbers(2, 3) == 6
+    assert multiply_numbers(-1, 5) == -5
+
+
+def test_area_of_circle():
+    """Test area of circle with valid radius."""
+    assert area_of_circle(1) == 3.141592653589793
+    assert area_of_circle(0) == 0
+
+
+def test_get_nth_fibonacci_zero():
+    """Test with n=0."""
+    assert get_nth_fibonacci(0) == 0
+
+
+def test_get_nth_fibonacci_one():
+    """Test with n=1."""
+    assert get_nth_fibonacci(1) == 1
+
+
+def test_get_nth_fibonacci_ten():
+    """Test with n=10."""
     # Arrange
-    radius = 1
+    n = 10
 
     # Act
-    result = area_of_circle(radius)
+    result = get_nth_fibonacci(n)
 
     # Assert
-    assert abs(result - 3.14159) < 1e-5
+    assert result == 55
 
 
 def test_area_of_circle_negative_radius():
@@ -40,26 +60,3 @@ def test_get_nth_fibonacci_negative():
     # Act & Assert
     with pytest.raises(ValueError):
         get_nth_fibonacci(n)
-
-def test_get_nth_fibonacci_one():
-    """Test with n=1."""
-    # Arrange
-    n = 1
-
-    # Act
-    result = get_nth_fibonacci(n)
-
-    # Assert
-    assert result == 1
-
-
- def test_get_nth_fibonacci_ten():
-    """Test with n=10."""
-    # Arrange
-    n = 10
-
-    # Act
-    result = get_nth_fibonacci(n)
-
-    # Assert
-    assert result == 55
